@@ -1,0 +1,57 @@
+[alias]
+	ll = log --format='%C(yellow)%h %C(blue)%<(17)%an %C(green)%ad %C(reset)%s' --date=format:'%d-%b-%Y %R'
+	lg = log --format='%C(yellow)%h %C(blue)%<(17)%an %C(red)%d %C(green)%ad %C(reset)%s' --date=short --graph --branches
+	lp = log --reverse -p
+	showtool = "!sh -c \"git difftool $1~1..$1\" -"
+[rerere]
+	enabled = true
+[user]
+	name = Lucian Varlan
+	email = lucian.varlan@nexthink.com
+[core]
+	editor = vim
+	pager = less -+$LESS -R
+[push]
+	default = simple
+[diff]
+    #tool = bc3
+    #tool = kdiff3
+    tool = meld
+    #tool = vimdiff
+[difftool "bc3"]
+    bc3 = trustExitCode
+    prompt = false
+[color]
+	ui = auto
+[difftool "kdiff3"]
+    trustExitCode = false
+[difftool "meld"]
+    cmd = meld "$LOCAL" "$REMOTE"
+[difftool "vimdiff"]
+    cmd = vim -f -d -c 'wincmd l' -c 'cd "$GIT_PREFIX"' "$LOCAL" "$REMOTE"
+[difftool "sdiff"]
+    cmd = sdiff   "$LOCAL" "$REMOTE"
+[difftool "ediff"]
+    cmd = emacs -nw --eval \"(ediff-files \\\"$LOCAL\\\" \\\"$REMOTE\\\")\"
+[merge]
+    tool = meld
+[mergetool "meld"]
+    # Choose one of these 2 lines (not both!) explained below.
+    cmd = meld "$LOCAL" "$MERGED" "$REMOTE" --output "$MERGED"
+    # cmd = meld "$LOCAL" "$BASE" "$REMOTE" --output "$MERGED"
+[mergetool "emerge"]
+	path = /home/lvarlan/opt/emerge-for-git
+
+[remote "origin"]
+    #prune = true
+	tagOpt = --tags
+	prune = false
+[commit]
+	verbose = True
+[status]
+	showuntrackedfiles = no
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
